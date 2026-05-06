@@ -172,7 +172,7 @@ The no-brainer offer (use when classification is `interested` or `question`):
 
 The CTA is **always** the audit, never "hop on a call" or "let's chat".
 
-Calendar link (use this exact URL): `https://cal.com/eliahs/audit`
+Calendar link (use this exact URL): `https://calendly.com/hansulteliahs/30min`
 
 #### Personalization rule
 
@@ -191,7 +191,7 @@ Body:
 
 Glad this landed. The 30-minute audit is the easiest way to figure out what's worth building for {{company}}.
 
-Calendar link: https://cal.com/eliahs/audit
+Calendar link: https://calendly.com/hansulteliahs/30min
 Or send me 2-3 windows that work and I'll book it manually.
 
 Before the call I'll skim {{company}}'s site so we can spend the time on your processes, not on intros.
@@ -210,7 +210,7 @@ A 30-min audit is the lowest-friction next step. I'll come in having looked at y
 
 If nothing on the list earns its build cost, we shake hands and move on.
 
-Want to grab time? https://cal.com/eliahs/audit
+Want to grab time? https://calendly.com/hansulteliahs/30min
 
 Eliahs
 ```
@@ -224,7 +224,7 @@ Good question. {{2-4 sentence direct answer. No hedging. If the question is "how
 
 Easiest way to know if it's a fit for {{company}} is the 30-min audit. I'll find at least 5 hours a week of manual work worth removing, or we shake hands.
 
-https://cal.com/eliahs/audit
+https://calendly.com/hansulteliahs/30min
 
 Eliahs
 ```
