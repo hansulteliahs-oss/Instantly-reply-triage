@@ -1,8 +1,10 @@
 # Instantly Reply Triage — Cloud Routine Prompt
 
-> **This file is the canonical routine prompt.** Copy its content (everything below the `---ROUTINE PROMPT BEGINS BELOW---` line) into the **Prompt** field at `claude.ai/code/routines` when creating or editing the "Instantly Reply Triage" routine.
+> **This file is the canonical routine prompt.** It's read at runtime by the "Instantly Reply Triage" routine on `claude.ai/code/routines` via the GitHub repo connector pointing at this repo (`hansulteliahs-oss/Instantly-reply-triage`, branch `main`).
 >
-> The routine runs on Anthropic cloud infrastructure. It has no access to local files, no `gws` CLI, no `~/AI Operating System/`. Everything it needs to know lives in the prompt below, in the cloud environment variables, and in the MCP connectors enabled for the routine.
+> Edits to this file take effect on the next routine fire — no UI paste required. To change the routine's behavior: edit, commit, push to `main`. The routine reads `main` fresh on each session start.
+>
+> The routine runs on Anthropic cloud infrastructure. It has no access to local AIOS files, no `gws` CLI, no `~/AI Operating System/`. Everything it needs to know lives in the prompt below (loaded from this repo), in the cloud environment variables, and in the MCP connectors enabled for the routine.
 
 ## Cloud setup (one-time, in claude.ai/code/routines UI)
 
@@ -22,7 +24,7 @@ When creating the routine, configure:
 
 **Network access**: full internet (needed for Apollo, Airtable, Instantly, ntfy).
 
-**Repositories**: none. v1 doesn't attach a repo.
+**Repositories**: this repo (`hansulteliahs-oss/Instantly-reply-triage`), branch `main`. The agent reads `ROUTINE_PROMPT.md` at session start. Local symlink in the AIOS at `.claude/skills/instantly/ROUTINE_PROMPT.md` → `~/repos/Instantly-reply-triage/ROUTINE_PROMPT.md` for grep-from-AIOS access.
 
 **Triggers**: Add an API trigger. Generate the bearer token and store immediately (it's shown once). Copy the URL too — it's `https://api.anthropic.com/v1/claude_code/routines/trig_xxx/fire`.
 
