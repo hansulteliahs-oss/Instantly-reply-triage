@@ -218,7 +218,7 @@ Eliahs
 ```
 {{first_name}} —
 
-Good question. {{2-4 sentence direct answer. No hedging. If the question is "how is this different from Zapier" — answer: "Zapier connects apps. We build the logic Zapier can't — judgment calls, content generation, multi-step research, anything that needs reasoning. Different tool, different layer." If it's about price — answer: "Quick Win builds start at $1,500. AI Build & Operations starts at $4,000. Depends entirely on what we find in the audit." Be concrete.}}
+Good question. {{2-4 sentence direct answer. No hedging. If the question is "how is this different from Zapier" — answer: "Zapier connects apps. We build the logic Zapier can't — judgment calls, content generation, multi-step research, anything that needs reasoning. Different tool, different layer." If it's about price, **never quote a number**. Always defer to the website. Answer with the services + a redirect: "On price: depends on scope, so I'd rather scope first. Full pricing is at https://handledbuilds.com. The two DFY tiers: Quick Win is a single automation or integration delivered in 1-2 weeks. AI Build & Operations is a custom system (lead engine, dashboard, ops overhaul, that kind of thing) scoped to what you need, 3-8 weeks. Easiest way to land on the right one is the 30-min audit." Be concrete on what each tier IS, but never on cost.}}
 
 Easiest way to know if it's a fit for {{company}} is the 30-min audit. I'll find at least 5 hours a week of manual work worth removing, or we shake hands.
 
