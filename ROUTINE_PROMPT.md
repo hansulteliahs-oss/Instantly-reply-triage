@@ -214,7 +214,7 @@ Body (HTML):
 ```
 {{first_name}},<br>
 <br>
-Appreciate the reply. Quick read on {{company}}: {{1-line observation from research that's actually relevant. Only include if you have one — otherwise drop this sentence entirely.}}<br>
+Appreciate the reply. Quick read on {{company}}: {{1-line observation from research that's actually relevant. Only include if you have one. Otherwise drop this sentence entirely.}}<br>
 <br>
 A 30-min audit is the lowest-friction next step. I'll come in having looked at your stack, ask 4-5 questions about your manual work, and walk out with a list of what's worth automating + what each thing would save in hours per week.<br>
 <br>
@@ -233,7 +233,7 @@ Body (HTML):
 ```
 {{first_name}},<br>
 <br>
-Good question. {{2-4 sentence direct answer. No hedging. If the question is "how is this different from Zapier", answer: "Zapier connects apps. We build the logic Zapier can't — judgment calls, content generation, multi-step research, anything that needs reasoning. Different tool, different layer." If it's about price, **never quote a number**. Always defer to the website. Answer with the services + a redirect: "On price: depends on scope, so I'd rather scope first. Full pricing is at <a href='https://handledbuilds.com'>handledbuilds.com</a>. The two DFY tiers: Quick Win is a single automation or integration delivered in 1-2 weeks. AI Build & Operations is a custom system (lead engine, dashboard, ops overhaul, that kind of thing) scoped to what you need, 3-8 weeks. Easiest way to land on the right one is the 30-min audit." Be concrete on what each tier IS, but never on cost.}}<br>
+Good question. {{2-4 sentence direct answer. No hedging. If the question is "how is this different from Zapier", answer: "Zapier connects apps. We build the logic Zapier can't: judgment calls, content generation, multi-step research, anything that needs reasoning. Different tool, different layer." If it's about price, **never quote a number**. Always defer to the website. Answer with the services + a redirect: "On price: depends on scope, so I'd rather scope first. Full pricing is at <a href='https://handledbuilds.com'>handledbuilds.com</a>. The two DFY tiers: Quick Win is a single automation or integration delivered in 1-2 weeks. AI Build & Operations is a custom system (lead engine, dashboard, ops overhaul, that kind of thing) scoped to what you need, 3-8 weeks. Easiest way to land on the right one is the 30-min audit." Be concrete on what each tier IS, but never on cost.}}<br>
 <br>
 Easiest way to know if it's a fit for {{company}} is the 30-min audit. I'll find at least 5 hours a week of manual work worth removing, or we shake hands.<br>
 <br>
@@ -263,7 +263,7 @@ Handled<br>
 
 Body (HTML):
 ```
-Got it, {{first_name}}. Have a good {{trip / break / time off — pick from their note. If the note doesn't say what kind, say "time off".}}. I'll circle back after {{return_date}}.<br>
+Got it, {{first_name}}. Have a good {{trip / break / time off, picking from their note. If the note doesn't say what kind, say "time off".}}. I'll circle back after {{return_date}}.<br>
 <br>
 - Eliahs<br>
 Handled<br>
@@ -335,7 +335,7 @@ Upgrade `Status` to `"Meeting Booked"` only if classification is `interested` Ho
 
 **`Reply Log` table** — append a new row:
 
-Fields: `Reply ID` (primary), `Lead Email`, `Received At`, `Event Type`, `Classification`, `Interest Level`, `Raw Payload` (JSON.stringify of `$INPUT`), `Research Snapshot` (JSON.stringify of research bundle), `Draft ID`, `Sent At` (leave empty in v1).
+Fields: `Reply ID` (primary), `Lead Email`, `Received At`, `Event Type`, `Classification`, `Interest Level`, `Raw Payload` (JSON.stringify of `$INPUT`), `Research Snapshot` (JSON.stringify of research bundle), `Draft ID`, `Draft Body` (the rendered HTML body from Step 6, even if Gmail draft creation in Step 7 failed), `Sent At` (leave empty in v1).
 
 ```bash
 curl -s -X POST "https://api.airtable.com/v0/appEJYWOrT5NAbxOM/Reply%20Log" \
