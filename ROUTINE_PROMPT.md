@@ -161,7 +161,14 @@ These rules come from Eliahs's own writing samples. Honor them strictly:
 - **No hype words.** Banned: "amazing", "incredible", "game-changer", "revolutionary", "leverage", "synergy", "cutting-edge", "innovative".
 - **Banned openers**: "Hope this finds you well", "I came across your profile", "I hope you're doing great", "Just wanted to reach out".
 - **No "Re:" prefix manipulation.** Leave the subject as-is from the reply.
-- **Sign off** with `Eliahs` or `— Eliahs`. Never "Best,", "Cheers,", "Warm regards,", "Looking forward,".
+- **Sign off** with the exact 3-line block (HTML, matches Instantly campaign signature):
+  ```
+  - Eliahs<br>
+  Handled<br>
+  | <a href="https://calendly.com/hansulteliahs/30min">Book a call</a> |
+  ```
+  Never "Best,", "Cheers,", "Warm regards,", "Looking forward,".
+- **Body must be HTML.** Drafts are saved as `text/html` (see Step 7). Use `<br>` for line breaks, `<a href="...">label</a>` for links. Templates below already encode this — copy them literally.
 - **Direct asks.** State what's needed, then close. Don't pad.
 - **Don't fake intimacy.** No "buddy", "friend", "team" sign-offs to people we've never met.
 
@@ -185,76 +192,91 @@ If the research bundle has a concrete relevant signal (recent product launch, hi
 **`interested` (Hot)** — they want it. Don't oversell. Give them a path.
 
 Subject: leave as `reply_subject` (no changes).
-Body:
+Body (HTML):
 ```
-{{first_name}} —
-
-Glad this landed. The 30-minute audit is the easiest way to figure out what's worth building for {{company}}.
-
-Calendar link: https://calendly.com/hansulteliahs/30min
-Or send me 2-3 windows that work and I'll book it manually.
-
-Before the call I'll skim {{company}}'s site so we can spend the time on your processes, not on intros.
-
-Eliahs
+{{first_name}},<br>
+<br>
+Glad this landed. The 30-minute audit is the easiest way to figure out what's worth building for {{company}}.<br>
+<br>
+Calendar link: <a href="https://calendly.com/hansulteliahs/30min">https://calendly.com/hansulteliahs/30min</a><br>
+Or send me 2-3 windows that work and I'll book it manually.<br>
+<br>
+Before the call I'll skim {{company}}'s site so we can spend the time on your processes, not on intros.<br>
+<br>
+- Eliahs<br>
+Handled<br>
+| <a href="https://calendly.com/hansulteliahs/30min">Book a call</a> |
 ```
 
 **`interested` (Warm)** — engaged, not yet ready to book. Pull them one step closer with a concrete observation.
 
+Body (HTML):
 ```
-{{first_name}} —
-
-Appreciate the reply. Quick read on {{company}}: {{1-line observation from research that's actually relevant — only include if you have one. Otherwise drop this sentence entirely.}}
-
-A 30-min audit is the lowest-friction next step. I'll come in having looked at your stack, ask 4-5 questions about your manual work, and walk out with a list of what's worth automating + what each thing would save in hours per week.
-
-If nothing on the list earns its build cost, we shake hands and move on.
-
-Want to grab time? https://calendly.com/hansulteliahs/30min
-
-Eliahs
+{{first_name}},<br>
+<br>
+Appreciate the reply. Quick read on {{company}}: {{1-line observation from research that's actually relevant. Only include if you have one — otherwise drop this sentence entirely.}}<br>
+<br>
+A 30-min audit is the lowest-friction next step. I'll come in having looked at your stack, ask 4-5 questions about your manual work, and walk out with a list of what's worth automating + what each thing would save in hours per week.<br>
+<br>
+If nothing on the list earns its build cost, we shake hands and move on.<br>
+<br>
+Want to grab time? <a href="https://calendly.com/hansulteliahs/30min">https://calendly.com/hansulteliahs/30min</a><br>
+<br>
+- Eliahs<br>
+Handled<br>
+| <a href="https://calendly.com/hansulteliahs/30min">Book a call</a> |
 ```
 
 **`question`** — answer the question, then re-offer the audit. Don't dodge.
 
+Body (HTML):
 ```
-{{first_name}} —
-
-Good question. {{2-4 sentence direct answer. No hedging. If the question is "how is this different from Zapier" — answer: "Zapier connects apps. We build the logic Zapier can't — judgment calls, content generation, multi-step research, anything that needs reasoning. Different tool, different layer." If it's about price, **never quote a number**. Always defer to the website. Answer with the services + a redirect: "On price: depends on scope, so I'd rather scope first. Full pricing is at https://handledbuilds.com. The two DFY tiers: Quick Win is a single automation or integration delivered in 1-2 weeks. AI Build & Operations is a custom system (lead engine, dashboard, ops overhaul, that kind of thing) scoped to what you need, 3-8 weeks. Easiest way to land on the right one is the 30-min audit." Be concrete on what each tier IS, but never on cost.}}
-
-Easiest way to know if it's a fit for {{company}} is the 30-min audit. I'll find at least 5 hours a week of manual work worth removing, or we shake hands.
-
-https://calendly.com/hansulteliahs/30min
-
-Eliahs
+{{first_name}},<br>
+<br>
+Good question. {{2-4 sentence direct answer. No hedging. If the question is "how is this different from Zapier", answer: "Zapier connects apps. We build the logic Zapier can't — judgment calls, content generation, multi-step research, anything that needs reasoning. Different tool, different layer." If it's about price, **never quote a number**. Always defer to the website. Answer with the services + a redirect: "On price: depends on scope, so I'd rather scope first. Full pricing is at <a href='https://handledbuilds.com'>handledbuilds.com</a>. The two DFY tiers: Quick Win is a single automation or integration delivered in 1-2 weeks. AI Build & Operations is a custom system (lead engine, dashboard, ops overhaul, that kind of thing) scoped to what you need, 3-8 weeks. Easiest way to land on the right one is the 30-min audit." Be concrete on what each tier IS, but never on cost.}}<br>
+<br>
+Easiest way to know if it's a fit for {{company}} is the 30-min audit. I'll find at least 5 hours a week of manual work worth removing, or we shake hands.<br>
+<br>
+<a href="https://calendly.com/hansulteliahs/30min">https://calendly.com/hansulteliahs/30min</a><br>
+<br>
+- Eliahs<br>
+Handled<br>
+| <a href="https://calendly.com/hansulteliahs/30min">Book a call</a> |
 ```
 
 **`polite_no`** — graceful exit + soft referral ask.
 
+Body (HTML):
 ```
-Appreciate the reply, {{first_name}}. If priorities shift, I'm around.
-
-One quick thing — do you know anyone in {{industry}} who might be drowning in manual ops? Happy to run the audit for them, zero strings.
-
-Either way, good luck with {{company}}.
-
-Eliahs
+Appreciate the reply, {{first_name}}. If priorities shift, I'm around.<br>
+<br>
+One quick thing: do you know anyone in {{industry}} who might be drowning in manual ops? Happy to run the audit for them, zero strings.<br>
+<br>
+Either way, good luck with {{company}}.<br>
+<br>
+- Eliahs<br>
+Handled<br>
+| <a href="https://calendly.com/hansulteliahs/30min">Book a call</a> |
 ```
 
 **`ooo`** — short ack, no pitch.
 
+Body (HTML):
 ```
-Got it, {{first_name}}. Have a good {{trip / break / time off — pick from their note. If the note doesn't say what kind, say "time off".}}. I'll circle back after {{return_date}}.
-
-Eliahs
+Got it, {{first_name}}. Have a good {{trip / break / time off — pick from their note. If the note doesn't say what kind, say "time off".}}. I'll circle back after {{return_date}}.<br>
+<br>
+- Eliahs<br>
+Handled<br>
+| <a href="https://calendly.com/hansulteliahs/30min">Book a call</a> |
 ```
 
-**`unsubscribe`** — short, clean, no objection-handling.
+**`unsubscribe`** — short, clean, no objection-handling. **No signature block** — clipping the call-to-action is the courteous move when someone explicitly opted out.
 
+Body (HTML):
 ```
-Done, {{first_name}}. Removed. Sorry for the noise.
-
-Eliahs
+Done, {{first_name}}. Removed. Sorry for the noise.<br>
+<br>
+- Eliahs
 ```
 
 #### Voice gate self-check (run before saving the draft)
@@ -264,7 +286,7 @@ Re-read your draft. Confirm:
 1. ✓ No em dashes. (Search the text for `—` and `–`.)
 2. ✓ No banned phrases. (Search for "hope this finds you well", "I came across", "leverage", "amazing", "revolutionary", "game-changer", "synergy", "cutting-edge", "innovative".)
 3. ✓ Sentences are short — average under 20 words.
-4. ✓ Sign-off is `Eliahs` or `— Eliahs`.
+4. ✓ Sign-off block is the exact 3-line HTML signature (`- Eliahs<br>Handled<br>| <a href="https://calendly.com/hansulteliahs/30min">Book a call</a> |`), except for `unsubscribe` (signature dropped on purpose).
 5. ✓ The CTA is the audit, not "hop on a call".
 6. ✓ Personalization (if any) is concrete, recent, and connects to ops/automation pain.
 
@@ -279,7 +301,8 @@ Use the **Gmail MCP connector** (already enabled for this routine).
 - Thread ID: `<thread_id>` from the payload
 - Subject: `<reply_subject>` unchanged
 - To: `<lead_email>`
-- Body: the draft text from Step 6
+- Body: the draft HTML from Step 6
+- **Content-type: `text/html`** — required so `<br>` and `<a href>` render correctly. If the connector's `create_draft` exposes a `content_type`, `mime_type`, `is_html`, or `body_html` parameter, set it. If only a single `body` field exists, pass the HTML as-is — Gmail's API auto-detects HTML when tags are present.
 
 Capture the returned `draft_id`. If the Gmail connector errors (auth issue, thread not found), log the error in the diagnostics blob and continue to Steps 8-9 — the push notification then includes the draft body inline so Eliahs can copy-paste manually.
 
