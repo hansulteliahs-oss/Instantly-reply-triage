@@ -48,36 +48,127 @@ Target wall-clock: under 60 seconds end to end.
 
 ---
 
+## Supported event types
+
+This routine handles 5 Instantly webhook events. Two are reply-driven (full 10-step workflow below). Three are lifecycle-driven (short-circuit branches under "Lifecycle events" — no research, no draft, just Airtable PATCH).
+
+| `event_type` | Path | Action summary |
+|---|---|---|
+| `reply_received` | Full triage (Steps 2-10) | Research, classify, draft Gmail reply, upsert Airtable, push if hot |
+| `lead_interested` | Full triage (Steps 2-10) | Same as above; `Interest Level` typically flagged hot upfront |
+| `email_bounced` | Lifecycle branch | PATCH `Exit reason = bounced`, `Last contacted = today`, `Status = Bounced`. Push. Exit. |
+| `lead_unsubscribed` | Lifecycle branch | PATCH `Exit reason = unsubscribed`, `Last contacted = today`, `Status = Unsubscribed`. Push. Exit. |
+| `campaign_completed` | Lifecycle branch | PATCH `Exit reason = ghosted`, `Last contacted = today`, `Status = Sequence completed`. Push (sunset eligible date+7). Exit. **Do NOT delete from Instantly** — the daily `sunset_leads.py` cron enforces the 7-day late-reply buffer and handles deletion. |
+
 ## Input payload shape
 
 After parsing the `text` field as JSON, expect:
 
 ```json
 {
-  "event_type": "reply_received" | "lead_interested",
-  "reply_id": "<unique id>",
+  "event_type": "reply_received" | "lead_interested" | "email_bounced" | "lead_unsubscribed" | "campaign_completed",
+  "reply_id": "<unique id, only present for reply events>",
   "lead_email": "prospect@example.com",
   "first_name": "Casey",
   "last_name": "Diaz",
   "company_name": "Acme Manufacturing",
+  "campaign_id": "<uuid, present for all events>",
   "campaign_name": "Manufacturing — Touch 1",
   "reply_subject": "Re: quick question about quote-to-invoice",
   "reply_text": "<full reply body, may contain quoted prior messages>",
   "sending_inbox": "eliahs@handledlab.com",
-  "thread_id": "<gmail thread id>",
+  "thread_id": "<gmail thread id, only present for reply events>",
   "received_at": "2026-05-12T15:42:18Z"
 }
 ```
 
 Field names may differ slightly — Instantly is allowed to rename. Fail-soft on missing fields. Log what's missing in the local diagnostics, continue with what you have.
 
+For `email_bounced` / `lead_unsubscribed` / `campaign_completed` events, most reply-shaped fields (`reply_id`, `reply_text`, `reply_subject`, `thread_id`) will be absent. That's expected — the lifecycle branches don't need them.
+
 ---
 
 ## Workflow (execute in order)
 
-### Step 1 — Parse + dedupe sanity check
+### Step 1 — Parse + event dispatch
 
-Parse the input. Check the **Reply Log** Airtable table for an existing row matching `Reply ID = reply_id`. If present, exit immediately with a short note. The n8n catcher should have already deduped, but defense in depth.
+Parse the input. Read `event_type` first.
+
+**If `event_type` is `email_bounced`, `lead_unsubscribed`, or `campaign_completed`** → jump to the matching branch under "Lifecycle events" below. Do NOT run Steps 2-10 — those events have no reply text, no Gmail thread, and don't need research or a draft.
+
+**If `event_type` is `reply_received` or `lead_interested`** → continue. Check the **Reply Log** Airtable table for an existing row matching `Reply ID = reply_id`. If present, exit immediately with a short note. The n8n catcher should have already deduped, but defense in depth.
+
+---
+
+## Lifecycle events (short-circuit branches)
+
+Each branch below performs a small, deterministic update and exits. Total runtime target: under 10 seconds.
+
+All three branches share the same Airtable lookup pattern. Airtable base: `appEJYWOrT5NAbxOM`. Table: `Leads for Instantly Campaigns` (`tbl1oEAArlu40S6Do`). Look up the lead by `Email` (case-insensitive) using:
+
+```bash
+curl -s "https://api.airtable.com/v0/appEJYWOrT5NAbxOM/tbl1oEAArlu40S6Do" \
+  -G --data-urlencode "filterByFormula=LOWER({Email})='<lower(lead_email)>'" \
+  --data-urlencode "maxRecords=1" \
+  -H "Authorization: Bearer $AIRTABLE_API_KEY"
+```
+
+If the lead is not found, append a row to `Triage Backlog` with `Raw Payload` = original input, `Error Reason` = "lifecycle event for unknown lead {email}", `Status` = "Pending". Push a warning. Exit.
+
+`today` below = ISO date in UTC (e.g., `2026-05-19`).
+
+### Branch: campaign_completed
+
+The lead finished the full sequence with no reply. Mark ghosted; do NOT delete from Instantly here — the daily `sunset_leads.py` cron handles deletion after the 7-day late-reply buffer (per `references/instantly-api.md` §8a).
+
+PATCH the lead row:
+- `Exit reason` = `ghosted`
+- `Last contacted` = `today`
+- `Status` = `Sequence completed` (informational only; doesn't drive sunset logic)
+
+Do NOT modify `Recontact count`, `Sunsetted At`, or `Stage` — those are managed elsewhere.
+
+ntfy push:
+- Title: `Lead ghosted`
+- Body: `{first_name} @ {company_name} — sunset eligible {today + 7 days}`
+
+Exit cleanly (skip Step 10 diagnostics line — this isn't a reply event).
+
+### Branch: email_bounced
+
+The email address is invalid. Mark for the next sunset cron run; do NOT call Instantly DELETE inline — the cron is the single delete path.
+
+PATCH the lead row:
+- `Exit reason` = `bounced`
+- `Last contacted` = `today`
+- `Status` = `Bounced`
+
+ntfy push:
+- Title: `Bounce`
+- Body: `{lead_email} ({company_name}). Will be deleted on next sunset cron run.`
+
+Exit cleanly.
+
+### Branch: lead_unsubscribed
+
+The recipient opted out. Suppress permanently — they will not enter any re-engagement rotation.
+
+PATCH the lead row:
+- `Exit reason` = `unsubscribed`
+- `Last contacted` = `today`
+- `Status` = `Unsubscribed`
+
+ntfy push:
+- Title: `Unsubscribe`
+- Body: `{lead_email}. Permanently suppressed.`
+
+Exit cleanly.
+
+---
+
+## Reply triage workflow (Steps 2-10)
+
+Only reached when `event_type ∈ {reply_received, lead_interested}`.
 
 ### Step 2 — Pull lead context from Airtable
 
